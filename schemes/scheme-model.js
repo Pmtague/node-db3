@@ -4,7 +4,9 @@ module.exports = {
 	find,
 	findById,
 	findSteps,
-	add
+	add,
+	update,
+	remove
 };
 
 function find() {
@@ -23,12 +25,27 @@ function findSteps(id) {
 			.where({ scheme_id: id })
 			.select('schemes.scheme_name', 'steps.step_number', 'steps.instructions')
 			.orderBy('steps.step_number')
-			.then(steps => {
-				return steps;
-			});
+			// .then(steps => {
+			// 	return steps;
+			// });
 };
 
 function add(scheme) {
 	return db('schemes')
 			.insert(scheme)
+}
+
+function update(changes, id) {
+	return db('schemes')
+			.where({id})
+			.update(changes)
+			// .then(scheme => {
+			// 	return scheme;
+			// });
+};
+
+function remove(id) {
+	return db('schemes')
+		.where({ id })
+		.del()
 }
